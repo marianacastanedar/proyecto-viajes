@@ -14,25 +14,19 @@ function App() {
         setItems([...items, nuevo]);
     }
     const [texto, setTexto] = useState("");
-    const [contador, setContador] = useState(0);
 
-    const sumar = (num) => {
-        setContador(contador+num);
-    }
-    
     
     return (
         
         <div>
-            <Formulario agregar={agregarItem} />
+            <Formulario agregarItem={agregarItem} />
             <VerItem items={items} />
-            <p>{contador}</p>
-            <button onClick={()=> sumar(1)}>boton</button>
+
         </div>
 
         
     );
-    
 }
 
 export default App;
+
