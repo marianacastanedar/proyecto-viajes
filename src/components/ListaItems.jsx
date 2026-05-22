@@ -1,17 +1,14 @@
-function VerItem({ items }) {
+import VerItem from "./ItemCard"
+
+function ListaItems({ items }) {
   return (
     <div>
-      {items.map(item =>
-        <div key={item.id}>
-          <p>{item.nombre}</p>
-          <p>{item.categoriaID}</p>
-          <p>{item.estado}</p>
-          <p>{item.puntuacion}</p>
-          <p>{item.notas}</p>
-        </div>
+      <h1>Historial de paises registrados:</h1>
+      {items.map(item => 
+          (<VerItem key={item.id} item={item} />)
       )}
     </div>
 
   )
 }
-export default VerItem;
+export default ListaItems;

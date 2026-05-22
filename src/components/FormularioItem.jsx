@@ -3,15 +3,14 @@ import { useState, useEffect } from "react";
 
 
 function Formulario({ agregarItem }) {
-    const [texto, setTexto] = useState("");
-    const [nombre, setNombre] = useState("");
+    const [pais, setPais] = useState("");
+    const [ciudad, setCiudad] = useState("");
     const [categoriaID, setCategoriaID] = useState("");
     const [estado, setEstado] = useState("");
     const [puntuacion, setPuntuacion] = useState(0);
     const [notas, setNotas] = useState("");
-
-
-
+    //const [activo, setActivo] = useState(true); 
+    //falta fecha registro, fecha actividad, atributos, activo
 
     return (
         <div>
@@ -21,7 +20,8 @@ function Formulario({ agregarItem }) {
                 e.preventDefault();
                 const nuevoItem = {
                     id: crypto.randomUUID(),
-                    nombre,
+                    pais,
+                    ciudad,
                     categoriaID,
                     estado,
                     puntuacion,
@@ -29,29 +29,41 @@ function Formulario({ agregarItem }) {
                 }
                 agregarItem(nuevoItem);
 
-                setNombre("");
+                setPais("");
+                setCiudad("");
                 setCategoriaID("");
                 setEstado("");
                 setPuntuacion(0)
                 setNotas("")
             }}>
                 <div>
-                    <p>nombre</p>
+                    <p>Nombre de País</p>
                     <input
-                        value={nombre}
-                        onChange={(e) => setNombre(e.target.value)}
+                        value={pais}
+                        onChange={(e) => setPais(e.target.value)}
                     />
                 </div>
 
                 <div>
-                    <p>tipo</p>
+                    <p>Nombre de ciudad</p>
+                    <input
+                        value={ciudad}
+                        onChange={(e) => setCiudad(e.target.value)}
+                    />
+                </div>
+
+                <div>
+                    <p>Categoría</p>
                     <select
                         value={categoriaID}
                         onChange={(e) => setCategoriaID(e.target.value)}
                     >
-                        <option>playa</option>
-                        <option>ciudad</option>
-                        <option>bosque</option>
+                        <option value="" disabled>Selecciona una categoría</option> //para que salga seleccionar pero disabled para que no se seleccione
+                        <option>Ciudad</option>
+                        <option>Naturaleza</option>
+                        <option>Playa</option>
+                        <option>Histórico</option>
+                        <option>Gastronómico</option>
                     </select>
                 </div>
 
@@ -61,13 +73,14 @@ function Formulario({ agregarItem }) {
                         value={estado}
                         onChange={(e) => setEstado(e.target.value)}
                     >
-                        <option>pendiente</option>
-                        <option>visitado</option>
+                        <option value="" disabled>Selecciona un estado</option>
+                        <option>Planeado</option>
+                        <option>Visitado</option>
                     </select>
                 </div>
 
                 <div>
-                    <p>puntuacion</p>
+                    <p>Ingrese puntuación (1-10)</p>
                     <input
                     type="number"
                     min="0"
@@ -78,7 +91,7 @@ function Formulario({ agregarItem }) {
                 </div>
 
                 <div>
-                    <p>notas</p>
+                    <p>Agregue notas</p>
                     <input
                         value={notas}
                         onChange={(e) => setNotas(e.target.value)}
