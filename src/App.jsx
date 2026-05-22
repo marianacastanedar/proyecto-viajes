@@ -1,19 +1,10 @@
 import { useState, useEffect } from "react";
-
+import Formulario from "./components/FormularioItem";
+import VerItem from "./components/ListaItems"
 
 function App() {
-    /*
     const [items, setItems] = useState(
         () => JSON.parse(localStorage.getItem('items') || '[]')
-    );
-    useEffect(() => {
-        localStorage.setItem('items', JSON.stringify(items));
-    }, [items]);
-    */
-
-    //const [items, setItems] = useState(["hola", "Andres"]);
-    const [items, setItems] = useState(
-        () => JSON.parse(localStorage.getItem('items') || ["hola"])
     );
     useEffect(() => {
         localStorage.setItem('items', JSON.stringify(items));
@@ -23,35 +14,23 @@ function App() {
         setItems([...items, nuevo]);
     }
     const [texto, setTexto] = useState("");
+    const [contador, setContador] = useState(0);
+
+    const sumar = (num) => {
+        setContador(contador+num);
+    }
     
     
-
-
     return (
+        
         <div>
-            <p>hola</p>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                agregarItem(texto);
-                setTexto("");
-            }}>
-                <input
-                    value={texto}
-                    onChange={(e) => setTexto(e.target.value)}
-                />
-                <button type="submit">
-                    enviar
-                </button>
-            </form>
-
-            <button onClick={() => agregarItem("HOLA")}>
-                AGREGAR UN HOLA
-            </button>
-            {items.map(item =>
-                <p key={item}>{item}</p>
-            )}
+            <Formulario agregar={agregarItem} />
+            <VerItem items={items} />
+            <p>{contador}</p>
+            <button onClick={()=> sumar(1)}>boton</button>
         </div>
 
+        
     );
     
 }
