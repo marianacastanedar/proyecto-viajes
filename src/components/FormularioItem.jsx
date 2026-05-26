@@ -26,6 +26,7 @@ function Formulario({ agregarItem }) {
                     estado,
                     puntuacion,
                     notas,
+                    activo: true,
                 }
                 agregarItem(nuevoItem);
 

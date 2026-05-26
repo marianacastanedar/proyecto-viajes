@@ -20,11 +20,42 @@ function App() {
         item.setActivo = false
     } */
 
-    
+    const archivarItem = (itemID) => {
+        const listaActualizada = items.map(item => {
+            if (item.id === itemID) {
+                return {
+                    ...item,
+                    activo: false
+                };
+            } else {
+                return item;
+            }
+        });
+        setItems(listaActualizada);
+};
+    /*
+    function mostrarSoloActivos() {
+        return (
+            <div>
+
+            {items
+                .filter(item => item.activo)
+                .map(item => (
+
+                    <div key={item.id}>
+                        <p>{item.nombre}</p>
+                    </div>
+
+                ))
+            }
+        </div>
+        )
+    } */
+
     return (
         <div>
             <Formulario agregarItem={agregarItem} />
-            <ListaItems items={items} />
+            <ListaItems items={items} archivarItem={archivarItem} />
         </div>
     );
 }
