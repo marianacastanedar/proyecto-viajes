@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/database');
 
-// traer todos los destinos activos
+// traer todos los activos
 router.get('/', (req, res) => {
     try {
         const filas = db.prepare(
