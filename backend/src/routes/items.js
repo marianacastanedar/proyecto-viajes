@@ -86,4 +86,25 @@ router.delete('/:id', (req, res) => {
     res.json({ mensaje: 'Destino archivado' });
 });
 
+// POST /api/items/:id/registro: post para registrar dias en un destino
+router.post('/:id/registro', (req, res) => {
+    const { fecha, valor, notas = '' } = req.body;
+    try {
+        const nuevoRegistro = {
+            id: crypto.randomUUID(),
+            itemId: req.params.id,
+            fecha,
+            valor,
+            notas
+        };
+        db.prepare(`
+            INSERT INTO registros (id, itemId, fecha, valor, notas)
+            VALUES (@id, @itemId, @fecha, @valor, @notas)
+        `).run(nuevoRegistro);
+        res.status(201).json(nuevoRegistro);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;
