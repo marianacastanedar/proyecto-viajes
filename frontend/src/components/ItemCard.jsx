@@ -6,7 +6,8 @@ function VerItem({ item, archivarItem }) {
             <div>
                 <p>Nombre: {item.nombre}</p>
                 <p>Pais: {item.atributos.pais}</p>
-                <p>Ciudad: {item.ciudad}</p>
+                <p>Ciudad: {item.atributos.ciudad}</p>
+                <p>Continente: {item.atributos.continente}</p>
                 <p>Categoría: {item.categoriaID}</p>
                 <p>Estado: {item.estado}</p>
                 <p>Puntuación: {item.puntuacion}</p>
