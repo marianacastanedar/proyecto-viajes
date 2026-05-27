@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/database');
 
-// traer todos los activos
+// metodo get para traer todos los activos
 router.get('/', (req, res) => {
     try {
         const filas = db.prepare(
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     }
 });
 
-// agregar un destino nuevo
+// post que agrega un destino nuevo
 router.post('/', (req, res) => {
     const { nombre, categoriaId, estado = "pendiente", atributos = {}, notas = "", puntuacion } = req.body;
 
@@ -49,6 +49,41 @@ router.post('/', (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// put para actualizar un destino
+router.put('/:id', (req, res) => {
+    const { nombre, categoriaId, estado, puntuacion, notas, atributos } = req.body;
+    try {
+        const info = db.prepare(`
+            UPDATE items SET nombre = @nombre, categoriaId = @categoriaId, estado = @estado,
+            puntuacion = @puntuacion, notas = @notas, atributos = @atributos,
+            fechaActividad = @fechaActividad
+            WHERE id = @id
+        `).run({
+            id: req.params.id,
+            nombre,
+            categoriaId,
+            estado,
+            puntuacion: puntuacion || null,
+            notas: notas || '',
+            atributos: JSON.stringify(atributos || {}),
+            fechaActividad: new Date().toISOString()
+        });
+        if (info.changes === 0) return res.status(404).json({ error: 'No encontrado' });
+        res.json({ mensaje: 'Destino actualizado' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// delete: archivar un destino
+router.delete('/:id', (req, res) => {
+    const info = db.prepare(
+        'UPDATE items SET activo = 0 WHERE id = ?'
+    ).run(req.params.id);
+    if (info.changes === 0) return res.status(404).json({ error: 'No encontrado' });
+    res.json({ mensaje: 'Destino archivado' });
 });
 
 module.exports = router;
