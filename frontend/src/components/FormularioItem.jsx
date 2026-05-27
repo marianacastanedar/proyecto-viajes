@@ -5,10 +5,12 @@ import { useState, useEffect } from "react";
 function Formulario({ agregarItem }) {
     const [pais, setPais] = useState("");
     const [ciudad, setCiudad] = useState("");
-    const [categoriaID, setCategoriaID] = useState("");
+    const [categoriaId, setCategoriaId] = useState("");
     const [estado, setEstado] = useState("");
-    const [puntuacion, setPuntuacion] = useState(0);
+    const [puntuacion, setPuntuacion] = useState("");
     const [notas, setNotas] = useState("");
+    const [nombre, setNombre] = useState("")
+    const [continente, setContinente] = useState("")
     //const [activo, setActivo] = useState(true); 
     //falta fecha registro, fecha actividad, atributos, activo
 
@@ -20,25 +22,37 @@ function Formulario({ agregarItem }) {
                 e.preventDefault();
                 const nuevoItem = {
                     id: crypto.randomUUID(),
-                    pais,
-                    ciudad,
-                    categoriaID,
+                    nombre,
+                    categoriaId,
                     estado,
-                    puntuacion,
+                    puntuacion: puntuacion !== "" ? Number(puntuacion) : null,
+                    fechaRegistro: new Date().toISOString(),
+                    fechaActividad: new Date().toISOString(),
                     notas,
-                    activo: true,
+                    atributos: { pais, ciudad, continente },
+                    activo: true
                 }
-                agregarItem(nuevoItem);
+                agregarItem(nuevoItem)
 
                 setPais("");
                 setCiudad("");
-                setCategoriaID("");
+                setCategoriaId("");
                 setEstado("");
-                setPuntuacion(0)
+                setPuntuacion("")
                 setNotas("")
+                setNombre("")
+                setContinente("")
             }}>
                 <div>
-                    <p>Nombre de País</p>
+                    <p>Nombre del destino</p>
+                    <input
+                        value={nombre}
+                        onChange={(e) => setNombre(e.target.value)}
+                    />
+                </div>
+
+                <div>
+                    <p>País</p>
                     <input
                         value={pais}
                         onChange={(e) => setPais(e.target.value)}
@@ -54,10 +68,18 @@ function Formulario({ agregarItem }) {
                 </div>
 
                 <div>
+                    <p>Continente</p>
+                    <input
+                        value={continente}
+                        onChange={(e) => setContinente(e.target.value)}
+                    />
+                </div>
+
+                <div>
                     <p>Categoría</p>
                     <select
-                        value={categoriaID}
-                        onChange={(e) => setCategoriaID(e.target.value)}
+                        value={categoriaId}
+                        onChange={(e) => setCategoriaId(e.target.value)}
                     >
                         <option value="" disabled>Selecciona una categoría</option> //para que salga seleccionar pero disabled para que no se seleccione
                         <option>Ciudad</option>
@@ -83,12 +105,12 @@ function Formulario({ agregarItem }) {
                 <div>
                     <p>Ingrese puntuación (1-10)</p>
                     <input
-                    type="number"
-                    min="0"
-                    max="10"
-                    value={puntuacion}
-                    onChange={(e) => setPuntuacion(e.target.value)}
-                />
+                        type="number"
+                        min="0"
+                        max="10"
+                        value={puntuacion}
+                        onChange={(e) => setPuntuacion(e.target.value)}
+                    />
                 </div>
 
                 <div>
@@ -98,7 +120,7 @@ function Formulario({ agregarItem }) {
                         onChange={(e) => setNotas(e.target.value)}
                     />
                 </div>
-                
+
                 <button type="submit">
                     enviar
                 </button>
