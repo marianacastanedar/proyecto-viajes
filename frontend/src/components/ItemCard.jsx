@@ -4,7 +4,8 @@ function VerItem({ item, archivarItem }) {
     return (
         <div style={{ backgroundColor: "#f1e4ff" }}>
             <div>
-                <p>Pais: {item.pais}</p>
+                <p>Nombre: {item.nombre}</p>
+                <p>Pais: {item.atributos.pais}</p>
                 <p>Ciudad: {item.ciudad}</p>
                 <p>Categoría: {item.categoriaID}</p>
                 <p>Estado: {item.estado}</p>
