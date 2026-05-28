@@ -12,7 +12,9 @@ app.use(express.json());
 const itemsRouter = require('./routes/items');
 app.use('/api/items', itemsRouter);
 
-app.get('/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/mariana-test', (req, res) => {
+    res.json({ ok: true });
+});
 
 app.listen(PORT, () => {
     console.log(`servidor corriendo en puerto ${PORT}`);
