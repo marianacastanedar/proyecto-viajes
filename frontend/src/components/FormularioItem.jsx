@@ -44,10 +44,18 @@ function Formulario({ agregarItem }) {
                 setContinente("")
             }}>
                 <div>
-                    <p>Nombre del destino</p>
+                    <p>Etiqueta del viaje (nombre)</p>
                     <input
                         value={nombre}
                         onChange={(e) => setNombre(e.target.value)}
+                    />
+                </div>
+
+                <div>
+                    <p>Continente</p>
+                    <input
+                        value={continente}
+                        onChange={(e) => setContinente(e.target.value)}
                     />
                 </div>
 
@@ -67,13 +75,7 @@ function Formulario({ agregarItem }) {
                     />
                 </div>
 
-                <div>
-                    <p>Continente</p>
-                    <input
-                        value={continente}
-                        onChange={(e) => setContinente(e.target.value)}
-                    />
-                </div>
+                
 
                 <div>
                     <p>Categoría</p>

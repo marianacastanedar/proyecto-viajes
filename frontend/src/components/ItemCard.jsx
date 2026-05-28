@@ -2,7 +2,7 @@
 
 function VerItem({ item, archivarItem }) {
     return (
-        <div style={{ backgroundColor: "#f1e4ff" }}>
+        <div>
             <div>
                 <p>Nombre: {item.nombre}</p>
                 <p>Pais: {item.atributos.pais}</p>
