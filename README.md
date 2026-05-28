@@ -3,7 +3,6 @@
 Aplicación web para registrar viajes con destinos visitados y pendientes. Hecha con React + Vite en el frontend y Express + better-SQLite3 en el backend.
 
 
-
 ## Mis primeros Items
 
 ![Captura de destinos1](images/image.png)
