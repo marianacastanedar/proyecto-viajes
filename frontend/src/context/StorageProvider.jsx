@@ -8,7 +8,7 @@ export function StorageProvider({ children }) {
         () => localStorage.getItem('modo') || 'local'
     );
     const [cargando, setCargando] = useState(false);
-    const [errorConexion, setError] = useState(null);
+    const [error, setError] = useState(null);
 
     const setModo = (nuevoModo) => {
         setModoState(nuevoModo);
@@ -35,8 +35,26 @@ export function StorageProvider({ children }) {
         }
     }, [modo]);
 
+    const guardarItem = useCallback(async (item) => {
+        if (modo === 'api') {
+            const res = await fetch(`${API_URL}/api/items`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(item)
+            });
+            if (!res.ok) throw new Error('No se pudo guardar el destino');
+            return await res.json();
+        } else {
+            const guardado = localStorage.getItem('items');
+            const lista = guardado ? JSON.parse(guardado) : [];
+            lista.push(item);
+            localStorage.setItem('items', JSON.stringify(lista));
+            return item;
+        }
+    }, [modo]);
+
     return (
-        <StorageContext.Provider value={{ modo, setModo, cargando, error, obtenerItems }}>
+        <StorageContext.Provider value={{ modo, setModo, cargando, error, obtenerItems, guardarItem }}>
             {children}
         </StorageContext.Provider>
     );
