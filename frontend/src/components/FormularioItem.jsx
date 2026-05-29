@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { CATEGORIAS } from "../utils/categorias";
 
 
@@ -12,8 +12,21 @@ function Formulario({ agregarItem }) {
     const [notas, setNotas] = useState("");
     const [nombre, setNombre] = useState("")
     const [continente, setContinente] = useState("")
-    //const [activo, setActivo] = useState(true); 
-    //falta fecha registro, fecha actividad, atributos, activo
+    //const [activo, setActivo] = useState(true);
+
+    const refInputNombre = useRef(null);
+
+    // ctr N
+    useEffect(() => {
+        const atajo = (e) => {
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                refInputNombre.current?.focus();
+            }
+        };
+        window.addEventListener('keydown', atajo);
+        return () => window.removeEventListener('keydown', atajo);
+    }, []);
 
     return (
         <div>
@@ -34,6 +47,7 @@ function Formulario({ agregarItem }) {
                     activo: true
                 }
                 agregarItem(nuevoItem)
+                refInputNombre.current?.focus();
 
                 setPais("");
                 setCiudad("");
@@ -47,6 +61,7 @@ function Formulario({ agregarItem }) {
                 <div>
                     <p>Etiqueta del viaje (nombre)</p>
                     <input
+                        ref={refInputNombre}
                         value={nombre}
                         onChange={(e) => setNombre(e.target.value)}
                     />
