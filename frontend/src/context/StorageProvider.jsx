@@ -53,8 +53,21 @@ export function StorageProvider({ children }) {
         }
     }, [modo]);
 
+    const eliminarItem = useCallback(async (id) => {
+        if (modo === 'api') {
+            const res = await fetch(`${API_URL}/api/items/${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('No se pudo archivar el destino');
+        } else {
+            const guardado = localStorage.getItem('items');
+            if (!guardado) return;
+            const lista = JSON.parse(guardado);
+            const actualizada = lista.map(i => i.id === id ? { ...i, activo: false } : i);
+            localStorage.setItem('items', JSON.stringify(actualizada));
+        }
+    }, [modo]);
+
     return (
-        <StorageContext.Provider value={{ modo, setModo, cargando, error, obtenerItems, guardarItem }}>
+        <StorageContext.Provider value={{ modo, setModo, cargando, error, obtenerItems, guardarItem, eliminarItem }}>
             {children}
         </StorageContext.Provider>
     );
