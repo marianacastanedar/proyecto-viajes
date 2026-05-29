@@ -1,59 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { StorageContext } from "./context/StorageContext";
 import Formulario from "./components/FormularioItem";
-import ListaItems from "./components/ListaItems"
+import ListaItems from "./components/ListaItems";
 
 function App() {
-    const [items, setItems] = useState(
-        () => JSON.parse(localStorage.getItem('items') || '[]')
-    );
+    const [items, setItems] = useState([]);
+    const { obtenerItems, guardarItem, eliminarItem, modo, setModo, cargando, error } = useContext(StorageContext);
+
     useEffect(() => {
-        localStorage.setItem('items', JSON.stringify(items));
-    }, [items]);
+        obtenerItems().then(lista => setItems(lista));
+    }, [obtenerItems]);
 
-    const agregarItem = (nuevo) => {
-        setItems([...items, nuevo]);
-    }
-    /*
-  const [activo, setActivo] = useState(true); 
-
-    const archivarItem = (item) => {
-        item.setActivo = false
-    } */
-
-    const archivarItem = (itemID) => {
-        const listaActualizada = items.map(item => {
-            if (item.id === itemID) {
-                return {
-                    ...item,
-                    activo: false
-                };
-            } else {
-                return item;
-            }
-        });
+    const agregarItem = async (nuevo) => {
+        await guardarItem(nuevo);
+        const listaActualizada = await obtenerItems();
         setItems(listaActualizada);
-};
-    /*
-    function mostrarSoloActivos() {
-        return (
-            <div>
+    };
 
-            {items
-                .filter(item => item.activo)
-                .map(item => (
-
-                    <div key={item.id}>
-                        <p>{item.nombre}</p>
-                    </div>
-
-                ))
-            }
-        </div>
-        )
-    } */
+    const archivarItem = async (itemID) => {
+        await eliminarItem(itemID);
+        const listaActualizada = await obtenerItems();
+        setItems(listaActualizada);
+    };
 
     return (
         <div>
+            <div>
+                <span>Modo actual: {modo}</span>
+                <button onClick={() => setModo(modo === 'api' ? 'local' : 'api')}>
+                    Cambiar a {modo === 'api' ? 'local' : 'api'}
+                </button>
+            </div>
+            {error && <p>Error: {error}</p>}
+            {cargando && <p>Cargando...</p>}
             <Formulario agregarItem={agregarItem} />
             <ListaItems items={items} archivarItem={archivarItem} />
         </div>
@@ -61,4 +40,3 @@ function App() {
 }
 
 export default App;
-

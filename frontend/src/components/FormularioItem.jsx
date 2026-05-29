@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { CATEGORIAS } from "../utils/categorias";
 
 
 
@@ -83,12 +84,12 @@ function Formulario({ agregarItem }) {
                         value={categoriaId}
                         onChange={(e) => setCategoriaId(e.target.value)}
                     >
-                        <option value="" disabled>Selecciona una categoría</option> //para que salga seleccionar pero disabled para que no se seleccione
-                        <option>Ciudad</option>
-                        <option>Naturaleza</option>
-                        <option>Playa</option>
-                        <option>Histórico</option>
-                        <option>Gastronómico</option>
+                        <option value="" disabled>Selecciona una categoría</option>
+                        {CATEGORIAS.map(cat => (
+                            <option key={cat.id} value={cat.id}>
+                                {cat.nombre}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
