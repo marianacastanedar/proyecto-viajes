@@ -76,7 +76,7 @@ function Formulario({ agregarItem }) {
                     />
                 </div>
 
-                
+
 
                 <div>
                     <p>Categoría</p>
@@ -133,3 +133,4 @@ function Formulario({ agregarItem }) {
 }
 
 export default Formulario;
+

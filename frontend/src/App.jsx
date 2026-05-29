@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { StorageContext } from "./context/StorageContext";
+import { useTheme } from "./context/ThemeProvider";
 import Formulario from "./components/FormularioItem";
 import ListaItems from "./components/ListaItems";
 
 function App() {
     const [items, setItems] = useState([]);
     const { obtenerItems, guardarItem, eliminarItem, modo, setModo, cargando, error } = useContext(StorageContext);
+    const { tema, toggleTema } = useTheme();
 
     useEffect(() => {
         obtenerItems().then(lista => setItems(lista));
@@ -29,6 +31,9 @@ function App() {
                 <span>Modo actual: {modo}</span>
                 <button onClick={() => setModo(modo === 'api' ? 'local' : 'api')}>
                     Cambiar a {modo === 'api' ? 'local' : 'api'}
+                </button>
+                <button onClick={toggleTema}>
+                    {tema === 'claro' ? '🌙 Oscuro' : '☀️ Claro'}
                 </button>
             </div>
             {error && <p>Error: {error}</p>}

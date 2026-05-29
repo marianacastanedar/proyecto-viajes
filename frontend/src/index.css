@@ -1,0 +1,26 @@
+body[data-theme="claro"] {
+    --fondo: #F6ECD9;
+    --fondoCard: #FFFDF7;
+    --acentoPrincipal: #1D6E7E;
+    --textoFuerte: #103C44;
+    --acentoSecundario: #E08B6A;
+    --texto: #173A3F;
+}
+
+body[data-theme="oscuro"] {
+    --fondo: #0A2429;
+    --fondoCard: #0F3840;
+    --acentoPrincipal: #3AA9C0;
+    --acentoSecundario: #E08B6A;
+    --texto: #EAF4EE;
+    --textoFuerte: #1D4A52;
+}
+
+body {
+    background: var(--fondo);
+    color: var(--texto);
+    transition: background 0.2s, color 0.2s;
+    margin: 0;
+    padding: 16px;
+    font-family: sans-serif;
+}
