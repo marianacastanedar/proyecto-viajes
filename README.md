@@ -90,5 +90,5 @@ Este acento lo dejé igual que en el tema claro para que tuviera un poco de conc
     --texto: #EAF4EE;
 Este color es casi blanco pero un poco verdoso para que no sea tan shokeante o contrastante
 
-    --textoFuerte: #1D4A52;
+    --textoFuerte: #386870;
 Este lo tome como segundo texto para que fuera un poco mas claro que el fondo-card pero no tanto para que no se viera tan fuera de lugar

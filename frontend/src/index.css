@@ -1,3 +1,7 @@
+@import "./components/formulario.css";
+@import "./components/itemCard.css";
+@import "./components/listaItems.css";
+
 body[data-theme="claro"] {
     --fondo: #F6ECD9;
     --fondoCard: #FFFDF7;
@@ -5,6 +9,13 @@ body[data-theme="claro"] {
     --textoFuerte: #103C44;
     --acentoSecundario: #E08B6A;
     --texto: #173A3F;
+
+    /* extras */
+
+    --acento-brillante: #2F96AB;
+    --texto-suave: #4D706F;
+    --linea: #E6D6BA;
+    --sobre-acento: #FDFAF2;
 }
 
 body[data-theme="oscuro"] {
@@ -13,7 +24,13 @@ body[data-theme="oscuro"] {
     --acentoPrincipal: #3AA9C0;
     --acentoSecundario: #E08B6A;
     --texto: #EAF4EE;
-    --textoFuerte: #1D4A52;
+    --textoFuerte: #386870;
+
+    /* extras */
+    --acento-brillante: #3AA9C0;
+    --texto-suave: #8FB6B5;
+    --linea: #1D4A52;
+    --sobre-acento: #052026;
 }
 
 body {

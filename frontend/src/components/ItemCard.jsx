@@ -2,18 +2,18 @@
 
 function VerItem({ item, archivarItem }) {
     return (
-        <div>
-            <div>
-                <p>Nombre: {item.nombre}</p>
-                <p>Pais: {item.atributos.pais}</p>
-                <p>Ciudad: {item.atributos.ciudad}</p>
-                <p>Continente: {item.atributos.continente}</p>
-                <p>Categoría: {item.categoriaId}</p>
-                <p>Estado: {item.estado}</p>
-                <p>Puntuación: {item.puntuacion}</p>
-                <p>Notas: {item.notas}</p>
+        <div className={`tarjeta cat-${item.categoriaId}`}>
+            <div className="cuerpoTarjeta">
+                <p className="nombreDestino">Nombre: {item.nombre}</p>
+                <p className="dato">Pais: {item.atributos.pais}</p>
+                <p className="dato">Ciudad: {item.atributos.ciudad}</p>
+                <p className="dato">Continente: {item.atributos.continente}</p>
+                <p className="dato">Categoría: {item.categoriaId}</p>
+                <p className="dato">Estado: {item.estado}</p>
+                <p className="dato">Puntuación: {item.puntuacion}</p>
+                <p className="dato">Notas: {item.notas}</p>
             </div>
-            <button onClick={
+            <button className="botonArchivar" onClick={
                 () => {
                     archivarItem(item.id)
                 }

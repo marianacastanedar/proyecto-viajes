@@ -2,8 +2,8 @@ import VerItem from "./ItemCard"
 
 function ListaItems({ items, archivarItem }) {
   return (
-    <div>
-      <h1>Historial de paises registrados:</h1>
+    <div className="lista">
+      <h1 className="tituloLista">Historial de paises registrados:</h1>
       {items
         .filter(item => item.activo)
         .map(item => 
