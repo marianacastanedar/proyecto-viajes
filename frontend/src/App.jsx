@@ -1,35 +1,36 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useReducer, useEffect, useContext, useRef } from "react";
 import { StorageContext } from "./context/StorageContext";
 import { useTheme } from "./context/ThemeProvider";
 import Formulario from "./components/FormularioItem";
 import ListaItems from "./components/ListaItems";
+import { viajesReducer, estadoInicial } from "./reducers/viajesReducer";
 
 function App() {
-    const [items, setItems] = useState([]);
+    const [estado, dispatch] = useReducer(viajesReducer, estadoInicial);
     const { obtenerItems, guardarItem, eliminarItem, modo, setModo, cargando, error } = useContext(StorageContext);
     const { tema, toggleTema } = useTheme();
     const intervaloRef = useRef(null);
 
     useEffect(() => {
-        obtenerItems().then(lista => setItems(lista));
+        obtenerItems().then(lista => dispatch({ type: 'hidratar', payload: lista }));
     }, [obtenerItems]);
 
-    // vuelve a cargar cada 30s en la api 
+    // vuelve a cargar cada 30s en la api
     useEffect(() => {
         if (modo === 'api') {
             intervaloRef.current = setInterval(() => {
-                obtenerItems().then(lista => setItems(lista));
+                obtenerItems().then(lista => dispatch({ type: 'hidratar', payload: lista }));
             }, 30000);
         }
         return () => clearInterval(intervaloRef.current);
     }, [modo, obtenerItems]);
 
-    // tema con el atajo de ctrl T
+    // tema con el atajo de ctrl T -- para pruebas lo dejé como ctrl k por que me abria otra pestaña
     useEffect(() => {
         const handler = (e) => {
             const enInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName);
             if (enInput) return;
-            if (e.key === 't' || e.key === 'T') toggleTema();
+            if (e.key === 'k' || e.key === 'K') toggleTema();
         };
         window.addEventListener('keydown', handler);
         return () => window.removeEventListener('keydown', handler);
@@ -37,14 +38,12 @@ function App() {
 
     const agregarItem = async (nuevo) => {
         await guardarItem(nuevo);
-        const listaActualizada = await obtenerItems();
-        setItems(listaActualizada);
+        dispatch({ type: 'agregar', payload: nuevo });
     };
 
     const archivarItem = async (itemID) => {
         await eliminarItem(itemID);
-        const listaActualizada = await obtenerItems();
-        setItems(listaActualizada);
+        dispatch({ type: 'eliminar', payload: itemID });
     };
 
     return (
@@ -71,7 +70,7 @@ function App() {
             </div>
 
             <div className="der">
-                <ListaItems items={items} archivarItem={archivarItem} />
+                <ListaItems items={estado.lista} archivarItem={archivarItem} />
             </div>
 
         </div>
