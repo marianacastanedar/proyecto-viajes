@@ -48,20 +48,32 @@ function App() {
     };
 
     return (
-        <div>
-            <div>
-                <span>Modo actual: {modo}</span>
-                <button onClick={() => setModo(modo === 'api' ? 'local' : 'api')}>
-                    Cambiar a {modo === 'api' ? 'local' : 'api'}
-                </button>
-                <button onClick={toggleTema}>
-                    {tema === 'claro' ? '🌙 Oscuro' : '☀️ Claro'}
-                </button>
+        <div className="fondo-pantalla">
+
+            <div className="izq">
+                <div>
+                    <h1>Bitacora de Viajes</h1>
+                    <div>
+                        <span>Modo actual: {modo}</span>
+                        <hr></hr>
+                        <button onClick={() => setModo(modo === 'api' ? 'local' : 'api')}>
+                            Cambiar a {modo === 'api' ? 'local' : 'api'}
+                        </button>
+                        <button onClick={toggleTema}>
+                            {tema === 'claro' ? '🌙 Oscuro' : '☀️ Claro'}
+                        </button>
+                        {error && <p>Error: {error}</p>}
+                        {cargando && <p>Cargando...</p>}
+                    </div>
+                </div>
+
+                <Formulario agregarItem={agregarItem} />
             </div>
-            {error && <p>Error: {error}</p>}
-            {cargando && <p>Cargando...</p>}
-            <Formulario agregarItem={agregarItem} />
-            <ListaItems items={items} archivarItem={archivarItem} />
+
+            <div className="der">
+                <ListaItems items={items} archivarItem={archivarItem} />
+            </div>
+
         </div>
     );
 }
