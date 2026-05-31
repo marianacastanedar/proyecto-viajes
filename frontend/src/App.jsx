@@ -3,6 +3,10 @@ import { StorageContext } from "./context/StorageContext";
 import { useTheme } from "./context/ThemeProvider";
 import Formulario from "./components/FormularioItem";
 import ListaItems from "./components/ListaItems";
+import GraficaActividad from "./components/GraficaActividad";
+import GraficaCategorias from "./components/GraficaCategorias";
+import GraficaTop5 from "./components/GraficaTop5";
+
 import { viajesReducer, estadoInicial } from "./reducers/viajesReducer";
 import { CATEGORIAS } from "./utils/categorias";
 
@@ -52,6 +56,13 @@ function App() {
         return lista;
     }, [estado.lista, estado.busqueda, estado.filtroCategoria, estado.filtroEstado]);
 
+    /* 
+    const itemsVisibles = estado.lista.filter(i => i.activo)
+        .filter(i => !estado.busqueda || i.nombre.toLowerCase().includes(estado.busqueda.toLowerCase()))
+        .filter(i => estado.filtroCategoria === 'todas' || i.categoriaId === estado.filtroCategoria)
+        .filter(i => estado.filtroEstado === 'todos' || i.estado === estado.filtroEstado);
+    */
+    
     const agregarItem = useCallback(async (nuevo) => {
         await guardarItem(nuevo);
         dispatch({ type: 'agregar', payload: nuevo });
@@ -87,7 +98,6 @@ function App() {
             </div>
 
             <div className="der">
-                {/* filtros */}
                 <div className="filtros">
                     <input
                         className="entradaFiltro"
@@ -125,6 +135,15 @@ function App() {
                 <p className="contadorResultados">{itemsVisibles.length} destino(s) encontrado(s)</p>
 
                 <ListaItems items={itemsVisibles} archivarItem={archivarItem} />
+
+                <div className="seccionGraficas">
+                    <h2 className="tituloGraficas">Estadísticas</h2>
+                    <div className="contenedorGraficas">
+                        <GraficaActividad items={itemsVisibles} />
+                        <GraficaCategorias items={itemsVisibles} />
+                        <GraficaTop5 items={itemsVisibles} />
+                    </div>
+                </div>
             </div>
 
         </div>

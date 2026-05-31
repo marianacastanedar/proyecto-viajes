@@ -1,6 +1,7 @@
 @import "./components/formulario.css";
 @import "./components/itemCard.css";
 @import "./components/listaItems.css";
+@import "./components/graficas.css";
 
 body[data-theme="claro"] {
     --fondo: #F6ECD9;

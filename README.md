@@ -92,3 +92,12 @@ Este color es casi blanco pero un poco verdoso para que no sea tan shokeante o c
 
     --textoFuerte: #386870;
 Este lo tome como segundo texto para que fuera un poco mas claro que el fondo-card pero no tanto para que no se viera tan fuera de lugar
+
+# Fase 3
+## Captura de profiler antes y después de use memo
+### Capturas de profiler
+
+Antes:
+![Captura de profiler Antes](images/profilerAntes.png)
+Después:
+![Captura de profiler después](images/profilerDespues.png)
