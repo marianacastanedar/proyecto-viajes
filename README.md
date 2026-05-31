@@ -95,9 +95,11 @@ Este lo tome como segundo texto para que fuera un poco mas claro que el fondo-ca
 
 # Fase 3
 ## Captura de profiler antes y después de use memo
-### Capturas de profiler
+### Capturas y análisis de profiler
 
 Antes:
 ![Captura de profiler Antes](images/profilerAntes.png)
+Antes al escribir cada letra en el buscador cambiaba el estado y los items se recalculaban como que si fueran una variable normal, entinces la lista recibía un nuevo array y ver item se volvia a renderizar cada vez aunque los datos no hubieran cambiado. Por eso se ven las barras de render en cada tarjeta de la lista. 
+
 Después:
 ![Captura de profiler después](images/profilerDespues.png)
