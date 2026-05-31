@@ -1,3 +1,4 @@
+import { memo } from 'react';
 
 
 function VerItem({ item, archivarItem }) {
@@ -24,4 +25,4 @@ function VerItem({ item, archivarItem }) {
 
     )
 }
-export default VerItem;
+export default memo(VerItem);

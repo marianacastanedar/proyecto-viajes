@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useContext, useRef, useMemo } from "react";
+import { useReducer, useEffect, useContext, useRef, useMemo, useCallback } from "react";
 import { StorageContext } from "./context/StorageContext";
 import { useTheme } from "./context/ThemeProvider";
 import Formulario from "./components/FormularioItem";
@@ -52,15 +52,16 @@ function App() {
         return lista;
     }, [estado.lista, estado.busqueda, estado.filtroCategoria, estado.filtroEstado]);
 
-    const agregarItem = async (nuevo) => {
+    const agregarItem = useCallback(async (nuevo) => {
         await guardarItem(nuevo);
         dispatch({ type: 'agregar', payload: nuevo });
-    };
+    }, [guardarItem]);
 
-    const archivarItem = async (itemID) => {
+    const archivarItem = useCallback(async (itemID) => {
         await eliminarItem(itemID);
         dispatch({ type: 'eliminar', payload: itemID });
-    };
+    }, [eliminarItem]);
+
 
     return (
         <div className="fondo-pantalla">
