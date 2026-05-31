@@ -1,9 +1,10 @@
-import { useReducer, useEffect, useContext, useRef } from "react";
+import { useReducer, useEffect, useContext, useRef, useMemo } from "react";
 import { StorageContext } from "./context/StorageContext";
 import { useTheme } from "./context/ThemeProvider";
 import Formulario from "./components/FormularioItem";
 import ListaItems from "./components/ListaItems";
 import { viajesReducer, estadoInicial } from "./reducers/viajesReducer";
+import { CATEGORIAS } from "./utils/categorias";
 
 function App() {
     const [estado, dispatch] = useReducer(viajesReducer, estadoInicial);
@@ -35,6 +36,21 @@ function App() {
         window.addEventListener('keydown', handler);
         return () => window.removeEventListener('keydown', handler);
     }, [toggleTema]);
+
+    // lista que ve su se cambia la lista o filtro
+    const itemsVisibles = useMemo(() => {
+        let lista = estado.lista.filter(i => i.activo);
+        if (estado.busqueda) {
+            lista = lista.filter(i => i.nombre.toLowerCase().includes(estado.busqueda.toLowerCase()));
+        }
+        if (estado.filtroCategoria !== 'todas') {
+            lista = lista.filter(i => i.categoriaId === estado.filtroCategoria);
+        }
+        if (estado.filtroEstado !== 'todos') {
+            lista = lista.filter(i => i.estado === estado.filtroEstado);
+        }
+        return lista;
+    }, [estado.lista, estado.busqueda, estado.filtroCategoria, estado.filtroEstado]);
 
     const agregarItem = async (nuevo) => {
         await guardarItem(nuevo);
@@ -70,7 +86,44 @@ function App() {
             </div>
 
             <div className="der">
-                <ListaItems items={estado.lista} archivarItem={archivarItem} />
+                {/* filtros */}
+                <div className="filtros">
+                    <input
+                        className="entradaFiltro"
+                        placeholder="Buscar destino..."
+                        value={estado.busqueda}
+                        onChange={(e) => dispatch({ type: 'filtro', payload: { campo: 'busqueda', valor: e.target.value } })}
+                    />
+                    <select
+                        className="selectorFiltro"
+                        value={estado.filtroCategoria}
+                        onChange={(e) => dispatch({ type: 'filtro', payload: { campo: 'filtroCategoria', valor: e.target.value } })}
+                    >
+                        <option value="todas">Todas las categorías</option>
+                        {CATEGORIAS.map(cat => (
+                            <option key={cat.id} value={cat.id}>{cat.emoji} {cat.nombre}</option>
+                        ))}
+                    </select>
+                    <select
+                        className="selectorFiltro"
+                        value={estado.filtroEstado}
+                        onChange={(e) => dispatch({ type: 'filtro', payload: { campo: 'filtroEstado', valor: e.target.value } })}
+                    >
+                        <option value="todos">Todos los estados</option>
+                        <option value="Planeado">Planeado</option>
+                        <option value="Visitado">Visitado</option>
+                    </select>
+                    <button
+                        className="botonLimpiar"
+                        onClick={() => dispatch({ type: 'quitarFiltro' })}
+                    >
+                        Limpiar filtros
+                    </button>
+                </div>
+
+                <p className="contadorResultados">{itemsVisibles.length} destino(s) encontrado(s)</p>
+
+                <ListaItems items={itemsVisibles} archivarItem={archivarItem} />
             </div>
 
         </div>
