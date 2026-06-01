@@ -117,3 +117,34 @@ Para mí la más difícil fue la de registrarActividad por que no podía modific
 
 ### Gráfica más compleja
 La gráfica más compleja fue la del top 5 ya que tenía que filtrar a los de puntuación, luego ordenarlos de mayor a menor y luego tomar solo los primeros 5. Luego además buscar el color de su categoría en el arreglo, por que así la barra cambia de color según la categoría y puede mostrar a que tipo de lugar pertenece cada uno.
+
+# Fase 4
+
+## URLs del proyecto desplegado
+
+- **Frontend (Vercel):** url
+- **Backend (Render):** url pendiente
+
+## Hooks personalizados
+
+| Hook | Parámetros | Retorna | Dónde se usa |
+|------|-----------|---------|--------------|
+| `useLocalStorage` | `clave`, `inicial` | `[valor, setValor]` | ThemeProvider |
+| `useFetch` | `url` | `{ data, cargando, error }` | App |
+| `useAtajoTeclado` | `tecla`, `alPresionar`, `opciones` | nada | App, FormularioItem |
+| `useEstadisticasViaje` | `items` | `{ total, visitados, planeados, promedio }` | App |
+
+## Variables de entorno
+
+## Sobre mí
+
+### Nombre
+Mariana Castañeda
+### Carnet
+24481
+### Semestre
+Quinto Semestre
+### Reflexión
+En general me pareció muy interesante el curso, me llama mucho la atención el tema de react y me gustaría enfocarme en aprender más y lograr ser fullstack por lo que este proyecto me ayudó mucho a entender varios temas. Lo que más se me dificultó fue unir todo y tener que aprender la sintaxis tanto de javascript como de jsx, me gustó que combinara varios lenguajes y que se puede hacer tanto html como javascript. Siento que se me dificultó un poco el tener que aprender tantos temas en el poco tiempo del semestre pero a pesar de eso si aprendí bastante.
+
+
