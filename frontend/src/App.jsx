@@ -1,5 +1,7 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useReducer, useEffect, useContext, useRef, useMemo, useCallback } from "react";
 import { useAtajoTeclado } from "./hooks/useAtajoTeclado";
+import { useFetch } from "./hooks/useFetch";
+import { useEstadisticasViaje } from "./hooks/useEstadisticasViaje";
 import { StorageContext } from "./context/StorageContext";
 import { useTheme } from "./context/ThemeProvider";
 import Formulario from "./components/FormularioItem";
@@ -34,6 +36,11 @@ function App() {
 
     // atajo T para cambiar tema
     useAtajoTeclado('t', toggleTema);
+
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    const { data: salud } = useFetch(modo === 'api' ? `${API_BASE}/mariana-test` : null);
+
+    const stats = useEstadisticasViaje(estado.lista);
 
 
     // lista que ve su se cambia la lista o filtro
@@ -86,7 +93,13 @@ function App() {
                         </button>
                         {error && <p>Error: {error}</p>}
                         {cargando && <p>Cargando...</p>}
+                        {salud && <p>API: conectada</p>}
                     </div>
+                </div>
+
+                <div className="resumenStats">
+                    <p>Total: {stats.total} | Visitados: {stats.visitados} | Planeados: {stats.planeados}</p>
+                    {stats.promedio > 0 && <p>Promedio: {stats.promedio.toFixed(1)}/10</p>}
                 </div>
 
                 <Formulario agregarItem={agregarItem} />
