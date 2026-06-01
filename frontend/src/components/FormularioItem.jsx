@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { CATEGORIAS } from "../utils/categorias";
+import { useAtajoTeclado } from '../hooks/useAtajoTeclado';
 
 
 
@@ -16,17 +17,8 @@ function Formulario({ agregarItem }) {
 
     const refInputNombre = useRef(null);
 
-    // ctr N
-    useEffect(() => {
-        const atajo = (e) => {
-            if (e.ctrlKey && e.key === 'n') {
-                e.preventDefault();
-                refInputNombre.current?.focus();
-            }
-        };
-        window.addEventListener('keydown', atajo);
-        return () => window.removeEventListener('keydown', atajo);
-    }, []);
+    // ctrl+N para el primer input
+    useAtajoTeclado('n', () => refInputNombre.current?.focus(), { ctrl: true });
 
     return (
         <div>
