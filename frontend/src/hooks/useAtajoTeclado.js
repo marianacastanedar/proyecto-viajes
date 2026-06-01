@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 /**
  * Escucha un atajo de teclado y llama una función al presionarlo
- * @param {string} tecla - tecla a escuchar (ej: 'n', 'k')
+ * @param {string} tecla - tecla del atajo
  * @param {Function} alPresionar - función que se ejecuta al presionar
- * @param {{ ctrl: boolean }} opciones - si ctrl es true, requiere Ctrl+tecla
+ * @param {{ ctrl: boolean }} opciones - si ctrl es true
  */
 export function useAtajoTeclado(tecla, alPresionar, { ctrl = false } = {}) {
     useEffect(() => {
