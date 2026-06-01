@@ -140,6 +140,42 @@ La gráfica más compleja fue la del top 5 ya que tenía que filtrar a los de pu
 
 ## Variables de entorno
 
+**Backend (.env):**
+- `PORT` — puerto donde corre el servidor pero render lo pone en automático
+- `FRONTEND_URL` — [url en vercel](https://proyecto-viajes-two.vercel.app/) 
+
+**Frontend (.env.local):**
+- `VITE_API_URL` — [url en render](https://proyecto-viajes-backend.onrender.com/)
+
+## Cómo correr localmente
+
+**Backend:**
+cd backend
+npm install
+node src/index.js
+
+**Frontend:**
+cd frontend
+npm install
+npm run dev
+
+El frontend corre en `http://localhost:5173` y el backend en `http://localhost:3001`.
+
+
+## Capturas de funcionamiento
+Fondo claro con Api
+![alt text](images/fondoClaro.png)
+![alt text](images/claroConGraficas.png)
+Fondo oscuro con Api
+![alt text](images/oscuroApi.png)
+![alt text](images/oscuroConGraficas.png)
+Fondo Claro Local
+![alt text](images/clarolocal.png)
+![alt text](images/claroEstadisticsLocal.png)
+Fondo Oscuro Local
+![alt text](images/oscuroEstadisticasLocal.png)
+![alt text](images/OscuroLocal.png)
+
 ## Sobre mí
 
 ### Nombre
