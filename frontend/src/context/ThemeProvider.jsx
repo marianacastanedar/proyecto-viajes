@@ -1,4 +1,5 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useEffect, createContext, useContext } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const ThemeContext = createContext(null);
 
@@ -7,17 +8,14 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }) {
-    const [tema, setTemaState] = useState(
-        () => localStorage.getItem('tema') || 'claro'
-    );
+    const [tema, setTema] = useLocalStorage('tema', 'claro');
 
     useEffect(() => {
         document.body.setAttribute('data-theme', tema);
-        localStorage.setItem('tema', tema);
     }, [tema]);
 
     const toggleTema = () => {
-        setTemaState(t => t === 'claro' ? 'oscuro' : 'claro');
+        setTema(t => t === 'claro' ? 'oscuro' : 'claro');
     };
 
     return (
