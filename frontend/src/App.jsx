@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, useRef } from "react";
+import { useAtajoTeclado } from "./hooks/useAtajoTeclado";
 import { StorageContext } from "./context/StorageContext";
 import { useTheme } from "./context/ThemeProvider";
 import Formulario from "./components/FormularioItem";
@@ -24,16 +25,8 @@ function App() {
         return () => clearInterval(intervaloRef.current);
     }, [modo, obtenerItems]);
 
-    // tema con el atajo de ctrl T
-    useEffect(() => {
-        const handler = (e) => {
-            const enInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName);
-            if (enInput) return;
-            if (e.key === 't' || e.key === 'T') toggleTema();
-        };
-        window.addEventListener('keydown', handler);
-        return () => window.removeEventListener('keydown', handler);
-    }, [toggleTema]);
+    // atajo T para cambiar tema
+    useAtajoTeclado('t', toggleTema);
 
     const agregarItem = async (nuevo) => {
         await guardarItem(nuevo);
