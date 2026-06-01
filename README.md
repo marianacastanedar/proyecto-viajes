@@ -1,6 +1,10 @@
-# Mi Colección de Viajes
+# Proyecto-Viajes
 
 Aplicación web para registrar viajes con destinos visitados y pendientes. Hecha con React + Vite en el frontend y Express + better-SQLite3 en el backend.
+
+- **Frontend (Vercel):** [url en vercel](https://proyecto-viajes-two.vercel.app/) 
+- **Backend (Render):** [url en render](https://proyecto-viajes-backend.onrender.com/)
+
 
 
 ## Mis primeros Items
@@ -122,8 +126,8 @@ La gráfica más compleja fue la del top 5 ya que tenía que filtrar a los de pu
 
 ## URLs del proyecto desplegado
 
-- **Frontend (Vercel):** url
-- **Backend (Render):** url pendiente
+- **Frontend (Vercel):** [url en vercel](https://proyecto-viajes-two.vercel.app/) 
+- **Backend (Render):** [url en render](https://proyecto-viajes-backend.onrender.com/)
 
 ## Hooks personalizados
 
