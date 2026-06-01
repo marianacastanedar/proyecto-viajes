@@ -1,0 +1,74 @@
+
+.tarjeta {
+    --grad: var(--acentoPrincipal);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--fondoCard);
+    border: 1px solid var(--linea);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(16, 60, 68, 0.07);
+    transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(16, 60, 68, 0.13);
+}
+
+.tarjeta::before {
+    content: "";
+    display: block;
+    height: 7px;
+    background: var(--grad);
+}
+
+/* gradients por categoría */
+.cat-ciudad        { --grad: linear-gradient(135deg, #053d79, #1D6E7E); }
+.cat-naturaleza    { --grad: linear-gradient(135deg, #3f701b, #2F96AB); }
+.cat-playa         { --grad: linear-gradient(135deg, #E08B6A, #B9DDE2); }
+.cat-historico     { --grad: linear-gradient(135deg, #6657da, #103C44); }
+.cat-gastronomico  { --grad: linear-gradient(135deg, #f16c32, #E08B6A); }
+
+.cuerpoTarjeta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 18px 14px;
+}
+
+.nombreDestino {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--textoFuerte);
+}
+
+.dato {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--texto);
+}
+
+.botonArchivar {
+    margin: 8px 16px 16px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    color: var(--acentoSecundario);
+    background: transparent;
+    border: 1px solid var(--acentoSecundario);
+    border-radius: 9px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.15s, color 0.15s;
+}
+
+.botonArchivar:hover {
+    background: var(--acentoSecundario);
+    color: var(--sobre-acento);
+}

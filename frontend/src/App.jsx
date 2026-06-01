@@ -4,57 +4,143 @@ import { StorageContext } from "./context/StorageContext";
 import { useTheme } from "./context/ThemeProvider";
 import Formulario from "./components/FormularioItem";
 import ListaItems from "./components/ListaItems";
+import GraficaActividad from "./components/GraficaActividad";
+import GraficaCategorias from "./components/GraficaCategorias";
+import GraficaTop5 from "./components/GraficaTop5";
+
+import { viajesReducer, estadoInicial } from "./reducers/viajesReducer";
+import { CATEGORIAS } from "./utils/categorias";
 
 function App() {
-    const [items, setItems] = useState([]);
+    const [estado, dispatch] = useReducer(viajesReducer, estadoInicial);
     const { obtenerItems, guardarItem, eliminarItem, modo, setModo, cargando, error } = useContext(StorageContext);
     const { tema, toggleTema } = useTheme();
     const intervaloRef = useRef(null);
 
     useEffect(() => {
-        obtenerItems().then(lista => setItems(lista));
+        obtenerItems().then(lista => dispatch({ type: 'hidratar', payload: lista }));
     }, [obtenerItems]);
 
-    // vuelve a cargar cada 30s en la api 
+    // vuelve a cargar cada 30s en la api
     useEffect(() => {
         if (modo === 'api') {
             intervaloRef.current = setInterval(() => {
-                obtenerItems().then(lista => setItems(lista));
+                obtenerItems().then(lista => dispatch({ type: 'hidratar', payload: lista }));
             }, 30000);
         }
         return () => clearInterval(intervaloRef.current);
     }, [modo, obtenerItems]);
 
+
     // atajo T para cambiar tema
     useAtajoTeclado('t', toggleTema);
 
-    const agregarItem = async (nuevo) => {
-        await guardarItem(nuevo);
-        const listaActualizada = await obtenerItems();
-        setItems(listaActualizada);
-    };
 
-    const archivarItem = async (itemID) => {
+    // lista que ve su se cambia la lista o filtro
+    const itemsVisibles = useMemo(() => {
+        let lista = estado.lista.filter(i => i.activo);
+        if (estado.busqueda) {
+            lista = lista.filter(i => i.nombre.toLowerCase().includes(estado.busqueda.toLowerCase()));
+        }
+        if (estado.filtroCategoria !== 'todas') {
+            lista = lista.filter(i => i.categoriaId === estado.filtroCategoria);
+        }
+        if (estado.filtroEstado !== 'todos') {
+            lista = lista.filter(i => i.estado === estado.filtroEstado);
+        }
+        return lista;
+    }, [estado.lista, estado.busqueda, estado.filtroCategoria, estado.filtroEstado]);
+
+    /* 
+    const itemsVisibles = estado.lista.filter(i => i.activo)
+        .filter(i => !estado.busqueda || i.nombre.toLowerCase().includes(estado.busqueda.toLowerCase()))
+        .filter(i => estado.filtroCategoria === 'todas' || i.categoriaId === estado.filtroCategoria)
+        .filter(i => estado.filtroEstado === 'todos' || i.estado === estado.filtroEstado);
+    */
+    
+    const agregarItem = useCallback(async (nuevo) => {
+        await guardarItem(nuevo);
+        dispatch({ type: 'agregar', payload: nuevo });
+    }, [guardarItem]);
+
+    const archivarItem = useCallback(async (itemID) => {
         await eliminarItem(itemID);
-        const listaActualizada = await obtenerItems();
-        setItems(listaActualizada);
-    };
+        dispatch({ type: 'eliminar', payload: itemID });
+    }, [eliminarItem]);
+
 
     return (
-        <div>
-            <div>
-                <span>Modo actual: {modo}</span>
-                <button onClick={() => setModo(modo === 'api' ? 'local' : 'api')}>
-                    Cambiar a {modo === 'api' ? 'local' : 'api'}
-                </button>
-                <button onClick={toggleTema}>
-                    {tema === 'claro' ? '🌙 Oscuro' : '☀️ Claro'}
-                </button>
+        <div className="fondo-pantalla">
+
+            <div className="izq">
+                <div>
+                    <h1>Bitacora de Viajes</h1>
+                    <div>
+                        <span>Modo actual: {modo}</span>
+                        <hr></hr>
+                        <button onClick={() => setModo(modo === 'api' ? 'local' : 'api')}>
+                            Cambiar a {modo === 'api' ? 'local' : 'api'}
+                        </button>
+                        <button onClick={toggleTema}>
+                            {tema === 'claro' ? '🌙 Oscuro' : '☀️ Claro'}
+                        </button>
+                        {error && <p>Error: {error}</p>}
+                        {cargando && <p>Cargando...</p>}
+                    </div>
+                </div>
+
+                <Formulario agregarItem={agregarItem} />
             </div>
-            {error && <p>Error: {error}</p>}
-            {cargando && <p>Cargando...</p>}
-            <Formulario agregarItem={agregarItem} />
-            <ListaItems items={items} archivarItem={archivarItem} />
+
+            <div className="der">
+                <div className="filtros">
+                    <input
+                        className="entradaFiltro"
+                        placeholder="Buscar destino..."
+                        value={estado.busqueda}
+                        onChange={(e) => dispatch({ type: 'filtro', payload: { campo: 'busqueda', valor: e.target.value } })}
+                    />
+                    <select
+                        className="selectorFiltro"
+                        value={estado.filtroCategoria}
+                        onChange={(e) => dispatch({ type: 'filtro', payload: { campo: 'filtroCategoria', valor: e.target.value } })}
+                    >
+                        <option value="todas">Todas las categorías</option>
+                        {CATEGORIAS.map(cat => (
+                            <option key={cat.id} value={cat.id}>{cat.emoji} {cat.nombre}</option>
+                        ))}
+                    </select>
+                    <select
+                        className="selectorFiltro"
+                        value={estado.filtroEstado}
+                        onChange={(e) => dispatch({ type: 'filtro', payload: { campo: 'filtroEstado', valor: e.target.value } })}
+                    >
+                        <option value="todos">Todos los estados</option>
+                        <option value="Planeado">Planeado</option>
+                        <option value="Visitado">Visitado</option>
+                    </select>
+                    <button
+                        className="botonLimpiar"
+                        onClick={() => dispatch({ type: 'quitarFiltro' })}
+                    >
+                        Limpiar filtros
+                    </button>
+                </div>
+
+                <p className="contadorResultados">{itemsVisibles.length} destino(s) encontrado(s)</p>
+
+                <ListaItems items={itemsVisibles} archivarItem={archivarItem} />
+
+                <div className="seccionGraficas">
+                    <h2 className="tituloGraficas">Estadísticas</h2>
+                    <div className="contenedorGraficas">
+                        <GraficaActividad items={itemsVisibles} />
+                        <GraficaCategorias items={itemsVisibles} />
+                        <GraficaTop5 items={itemsVisibles} />
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 }

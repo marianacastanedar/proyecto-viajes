@@ -1,0 +1,38 @@
+.seccionGraficas {
+    margin-top: 32px;
+}
+
+.tituloGraficas {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--acentoPrincipal);
+    margin: 0 0 16px;
+}
+
+.contenedorGraficas {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.graficaBloque {
+    background: var(--fondoCard);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--linea);
+}
+
+.subtituloGrafica {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--textoFuerte);
+    margin: 0 0 12px;
+}
+
+.sinDatos {
+    font-size: 13px;
+    color: var(--texto-suave);
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+}

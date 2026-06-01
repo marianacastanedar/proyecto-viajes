@@ -1,0 +1,107 @@
+
+.formulario {
+    background: var(--fondoCard);
+    border: 1px solid var(--linea);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 12px 28px rgba(16, 60, 68, 0.08);
+    box-sizing: border-box;
+}
+
+.tituloForm {
+    margin: 0 0 18px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--acentoPrincipal);
+}
+
+.camposForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.etiqueta {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+}
+
+.entrada,
+.selector {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--texto);
+    background: var(--fondo);
+    border: 1px solid var(--linea);
+    border-radius: 11px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.entrada::placeholder {
+    color: var(--texto-suave);
+    opacity: 0.7;
+}
+
+.entrada:focus,
+.selector:focus {
+    outline: none;
+    border-color: var(--acentoPrincipal);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--acentoPrincipal) 22%, transparent);
+}
+
+.selector {
+    appearance: none;
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--acentoPrincipal) 50%),
+        linear-gradient(135deg, var(--acentoPrincipal) 50%, transparent 50%);
+    background-position: calc(100% - 18px) calc(50% + 1px), calc(100% - 13px) calc(50% + 1px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 34px;
+}
+
+.botonEnviar {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    padding: 13px 18px;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+    color: var(--sobre-acento);
+    background: var(--acentoPrincipal);
+    border: none;
+    border-radius: 11px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.05s;
+}
+
+.botonEnviar:hover {
+    background: var(--acento-brillante);
+}
+
+.botonEnviar:active {
+    transform: translateY(1px);
+}
+
+@media (max-width: 560px) {
+    .camposForm {
+        grid-template-columns: 1fr;
+    }
+}

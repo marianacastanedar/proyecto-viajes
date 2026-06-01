@@ -21,9 +21,9 @@ function Formulario({ agregarItem }) {
     useAtajoTeclado('n', () => refInputNombre.current?.focus(), { ctrl: true });
 
     return (
-        <div>
-            <h1>Formulario</h1>
-            <form onSubmit={(e) => {
+        <div className="formulario">
+            <h1 className="tituloForm">Formulario</h1>
+            <form className="camposForm" onSubmit={(e) => {
 
                 e.preventDefault();
                 const nuevoItem = {
@@ -50,34 +50,38 @@ function Formulario({ agregarItem }) {
                 setNombre("")
                 setContinente("")
             }}>
-                <div>
-                    <p>Etiqueta del viaje (nombre)</p>
+                <div className="campo">
+                    <p className="etiqueta">Etiqueta del viaje (nombre)</p>
                     <input
+                        className="entrada"
                         ref={refInputNombre}
                         value={nombre}
                         onChange={(e) => setNombre(e.target.value)}
                     />
                 </div>
 
-                <div>
-                    <p>Continente</p>
+                <div className="campo">
+                    <p className="etiqueta">Continente</p>
                     <input
+                        className="entrada"
                         value={continente}
                         onChange={(e) => setContinente(e.target.value)}
                     />
                 </div>
 
-                <div>
-                    <p>País</p>
+                <div className="campo">
+                    <p className="etiqueta">País</p>
                     <input
+                        className="entrada"
                         value={pais}
                         onChange={(e) => setPais(e.target.value)}
                     />
                 </div>
 
-                <div>
-                    <p>Nombre de ciudad</p>
+                <div className="campo">
+                    <p className="etiqueta">Nombre de ciudad</p>
                     <input
+                        className="entrada"
                         value={ciudad}
                         onChange={(e) => setCiudad(e.target.value)}
                     />
@@ -85,9 +89,10 @@ function Formulario({ agregarItem }) {
 
 
 
-                <div>
-                    <p>Categoría</p>
+                <div className="campo">
+                    <p className="etiqueta">Categoría</p>
                     <select
+                        className="selector"
                         value={categoriaId}
                         onChange={(e) => setCategoriaId(e.target.value)}
                     >
@@ -100,9 +105,10 @@ function Formulario({ agregarItem }) {
                     </select>
                 </div>
 
-                <div>
-                    <p>estado</p>
+                <div className="campo">
+                    <p className="etiqueta">estado</p>
                     <select
+                        className="selector"
                         value={estado}
                         onChange={(e) => setEstado(e.target.value)}
                     >
@@ -112,9 +118,10 @@ function Formulario({ agregarItem }) {
                     </select>
                 </div>
 
-                <div>
-                    <p>Ingrese puntuación (1-10)</p>
+                <div className="campo">
+                    <p className="etiqueta">Ingrese puntuación (1-10)</p>
                     <input
+                        className="entrada"
                         type="number"
                         min="0"
                         max="10"
@@ -123,15 +130,16 @@ function Formulario({ agregarItem }) {
                     />
                 </div>
 
-                <div>
-                    <p>Agregue notas</p>
+                <div className="campo">
+                    <p className="etiqueta">Agregue notas</p>
                     <input
+                        className="entrada"
                         value={notas}
                         onChange={(e) => setNotas(e.target.value)}
                     />
                 </div>
 
-                <button type="submit">
+                <button type="submit" className="botonEnviar">
                     enviar
                 </button>
             </form>
