@@ -94,12 +94,26 @@ Este color es casi blanco pero un poco verdoso para que no sea tan shokeante o c
 Este lo tome como segundo texto para que fuera un poco mas claro que el fondo-card pero no tanto para que no se viera tan fuera de lugar
 
 # Fase 3
-## Captura de profiler antes y después de use memo
-### Capturas y análisis de profiler
 
-Antes:
+## Capturas y análisis de profiler
+
+### Antes:
 ![Captura de profiler Antes](images/profilerAntes.png)
 Antes al escribir cada letra en el buscador cambiaba el estado y los items se recalculaban como que si fueran una variable normal, entinces la lista recibía un nuevo array y ver item se volvia a renderizar cada vez aunque los datos no hubieran cambiado. Por eso se ven las barras de render en cada tarjeta de la lista. 
 
-Después:
+### Después:
 ![Captura de profiler después](images/profilerDespues.png)
+Ahora los items se recalculan solo cuando cambian sus dependencias reales como lista, busqueda o filtros.Las tarjetas en donde el prop no cambió se saltan. Por eso el profiler muestra menos componentes marcados por el render cuando se recibe, como por ejemplo los de VerItem, pues filtrar no crea nuevos objetos si no que solo excluye los items que no interesa ver.
+
+## Mi gráfica Original
+Yo me decidí por usar una gráfica que muestra cuántos destinos se registraron cada día de los últimos 7 días. Esta se llama GraficaActividad. Lo elegí para que se pueda mantener visualmente la cantidad de viajes registrados y asi ver que tal estuvo la semana.
+
+## Mis 3 decisiones técnicas 
+### Estrucutra del reducer
+Para el reducer usé para cada filtro una acción separada tipo por categoría o por estado y para buscar, luego para filtro le pasé campo y valor  para que el reducer aplique el cambio con el estado, accion.payload.campo: accion.payload.valor. Eso lo hice para que se mantuviera en 7 acciones y no se alargara a tanto.
+
+### Acción más difícil
+Para mí la más difícil fue la de registrarActividad por que no podía modificar el objeto directamente asi que tuve que usar map para recorrer la lista, entonces ya cuando map identificaba que el ID era igual devolvía el objeto nuevo del item + el campo actualizado { ...i, fechaActividad: accion.payload.fecha }
+
+### Gráfica más compleja
+La gráfica más compleja fue la del top 5 ya que tenía que filtrar a los de puntuación, luego ordenarlos de mayor a menor y luego tomar solo los primeros 5. Luego además buscar el color de su categoría en el arreglo, por que así la barra cambia de color según la categoría y puede mostrar a que tipo de lugar pertenece cada uno.
